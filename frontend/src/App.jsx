@@ -107,7 +107,7 @@ function CreatePollForm({ onCreated }) {
             type="text"
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
-            placeholder="What should we decide?"
+            placeholder="What should we decide in this?"
             maxLength={200}
           />
         </label>
