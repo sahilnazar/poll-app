@@ -18,9 +18,13 @@ jobs:
 
       - name: Wait for app
         run: |
-          echo "Waiting for app on http://localhost:3000 ..."
+          echo "Containers and port mapping:"
+          docker compose ps -a
+          docker port poll-frontend 2>/dev/null || true
+          echo "Waiting for app on http://127.0.0.1:3001 ..."
+          sleep 5
           for i in $(seq 1 60); do
-            if curl -sf http://localhost:3000/ > /dev/null 2>&1; then
+            if curl -4 -sf --connect-timeout 5 http://127.0.0.1:3001/ > /dev/null 2>&1; then
               echo "App is up after ${i} attempts"
               break
             fi
@@ -35,12 +39,10 @@ jobs:
 
       - name: Validate API
         run: |
-          curl -sf http://localhost:3000/api/health | grep -q '"status":"ok"' || (echo "Health check failed" && exit 1)
-          # Create poll
-          ID=$(curl -sf -X POST http://localhost:3000/api/polls -H "Content-Type: application/json" -d '{"question":"Test?","options":["A","B"]}' | grep -o '"id":"[^"]*"' | cut -d'"' -f4)
+          curl -4 -sf http://127.0.0.1:3001/api/health | grep -q '"status":"ok"' || (echo "Health check failed" && exit 1)
+          ID=$(curl -4 -sf -X POST http://127.0.0.1:3001/api/polls -H "Content-Type: application/json" -d '{"question":"Test?","options":["A","B"]}' | grep -o '"id":"[^"]*"' | cut -d'"' -f4)
           test -n "$ID" || (echo "Create poll failed" && exit 1)
-          # Get results
-          curl -sf "http://localhost:3000/api/polls/$ID/results" | grep -q "Test?" || (echo "Get results failed" && exit 1)
+          curl -4 -sf "http://127.0.0.1:3001/api/polls/$ID/results" | grep -q "Test?" || (echo "Get results failed" && exit 1)
           echo "Validation passed"
 
       - name: Stop services
