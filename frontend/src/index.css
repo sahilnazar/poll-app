@@ -1,0 +1,259 @@
+:root {
+  --bg: #0f0f12;
+  --surface: #1a1a20;
+  --surface2: #25252d;
+  --text: #e8e6e3;
+  --textMuted: #9b9893;
+  --accent: #57bdbb;
+  --accentHover: #6dd4d2;
+  --danger: #e05c5c;
+  --success: #5cb85c;
+  --radius: 10px;
+  --font: 'DM Sans', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+input, button, textarea {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Layout */
+.app {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 0 0 0.25rem 0;
+}
+
+.tagline {
+  color: var(--textMuted);
+  margin: 0;
+  font-size: 1rem;
+}
+
+.live-dot {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--success);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Cards */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  border: 1px solid var(--surface2);
+}
+
+.card h2, .card h3, .card h4 {
+  margin: 0 0 1rem 0;
+  font-size: 1.15rem;
+}
+
+.poll-card {
+  position: relative;
+}
+
+.poll-card h3 {
+  padding-right: 5rem;
+}
+
+.badge.closed {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--surface2);
+  color: var(--textMuted);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+}
+
+/* Form */
+.create-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--textMuted);
+}
+
+.create-form input[type="text"] {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  margin-bottom: 0.75rem;
+  background: var(--surface2);
+  border: 1px solid var(--surface2);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.create-form input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.option-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.option-row input {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--surface2);
+  color: var(--textMuted);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.add-opt {
+  margin-bottom: 1rem;
+}
+
+.btn {
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+}
+
+.btn.primary {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.btn.primary:hover:not(:disabled) {
+  background: var(--accentHover);
+}
+
+.vote-btn {
+  background: var(--surface2);
+  color: var(--text);
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.vote-btn:hover:not(:disabled) {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.form-error {
+  color: var(--danger);
+  font-size: 0.9rem;
+  margin: 0 0 0.75rem 0;
+}
+
+.muted {
+  color: var(--textMuted);
+  margin: 0;
+}
+
+/* Poll grid */
+.polls-section h2 {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.poll-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.poll-actions {
+  margin-bottom: 1rem;
+}
+
+.results-section {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--surface2);
+}
+
+.results-section h4 {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--textMuted);
+}
+
+.results-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
+
+.results-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.35rem 0;
+  font-size: 0.95rem;
+}
+
+.opt-label {
+  color: var(--text);
+}
+
+.opt-votes {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.chart-wrap {
+  margin-top: 1rem;
+}

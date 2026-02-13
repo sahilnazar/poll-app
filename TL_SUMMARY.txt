@@ -1,0 +1,66 @@
+Hi [TL name],
+
+Here’s a short summary of what I did for the Real-time Polling Application (Technical Assessment – Problem Statement #3).
+
+---
+
+WHAT I BUILT
+
+A containerized real-time polling app where users can:
+• Create polls (question + 2–4 options)
+• View active polls and vote (anonymously)
+• See results update in real time without refreshing the page
+
+The app runs entirely inside Docker Desktop (no external services or cloud dependencies), as required.
+
+---
+
+TECH STACK
+
+• Backend: Node.js (Express), in-memory store, REST API + WebSocket server for live updates
+• Frontend: React (Vite) with a simple UI; results shown as a list plus bar and pie charts (Recharts)
+• Real-time: WebSockets so all connected clients see new votes and new polls immediately
+• Docker: Two containers (frontend + backend), orchestrated with docker-compose; app is available at http://localhost:3000
+• Optional: Kubernetes manifests and deploy scripts so the same app can run as Pods in Docker Desktop
+
+---
+
+REQUIREMENTS COVERED
+
+• Web: Create-poll form, list of polls, vote buttons, live results (and charts)
+• API: POST/GET /polls, POST /polls/:id/vote, GET /polls/:id/results, plus WebSocket for real-time updates
+• Docker: Dockerfiles for backend and frontend, docker-compose.yml, single-command run with “docker compose up”, port 3000
+• CI/CD: GitHub Actions workflow on push to main – builds images, runs the stack, and runs basic API checks
+• Error handling: Validation for invalid poll data (e.g. wrong number of options), and blocking votes on closed polls with a clear error
+• Docs: README (how to run with Docker/Kubernetes), APPROACH.md (approach, Docker design, tech choices, CI/CD, challenges)
+
+Bonus items I included:
+• WebSockets for real-time updates (instead of only HTTP polling)
+• Chart visualization (bar + pie) for results
+• Kubernetes deployment (manifests + scripts) so the app can run as Pods in Docker Desktop
+
+---
+
+HOW TO RUN IT
+
+• Docker Compose: “docker compose up” → open http://localhost:3000
+• Kubernetes (optional): Run “.\deploy-k8s.ps1” (or the shell script on Mac/Linux) → Pods show in Docker Desktop; app is available via port-forward (e.g. http://localhost:3000 or 3001 if 3000 is in use)
+
+---
+
+DELIVERABLES IN THE REPO
+
+• Working app via docker-compose (and optionally via Kubernetes)
+• Dockerfile(s) for backend and frontend
+• docker-compose.yml
+• GitHub Actions workflow under .github/workflows/
+• README.md (Docker and Kubernetes setup)
+• APPROACH.md (process and decisions)
+• .gitignore set up
+• Optional: k8s/ manifests and deploy-k8s.ps1 / deploy-k8s.sh
+
+---
+
+I can walk you through the repo, run the app, or adjust anything you need.
+
+[Your name]

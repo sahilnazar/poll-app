@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker images
+        run: docker compose build
+
+      - name: Start services
+        run: docker compose up -d
+
+      - name: Wait for app
+        run: |
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:3000/ > /dev/null; then
+              echo "App is up"
+              break
+            fi
+            if [ $i -eq 30 ]; then exit 1; fi
+            sleep 2
+          done
+
+      - name: Validate API
+        run: |
+          curl -sf http://localhost:3000/api/health | grep -q '"status":"ok"' || (echo "Health check failed" && exit 1)
+          # Create poll
+          ID=$(curl -sf -X POST http://localhost:3000/api/polls -H "Content-Type: application/json" -d '{"question":"Test?","options":["A","B"]}' | grep -o '"id":"[^"]*"' | cut -d'"' -f4)
+          test -n "$ID" || (echo "Create poll failed" && exit 1)
+          # Get results
+          curl -sf "http://localhost:3000/api/polls/$ID/results" | grep -q "Test?" || (echo "Get results failed" && exit 1)
+          echo "Validation passed"
+
+      - name: Stop services
+        if: always()
+        run: docker compose down

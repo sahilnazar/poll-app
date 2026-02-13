@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+.env.local
+*.log
+.DS_Store
+docx_extract/
+temp_assessment.zip

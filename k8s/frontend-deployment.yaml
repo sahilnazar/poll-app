@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: poll-frontend
+  labels:
+    app: poll-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: poll-frontend
+  template:
+    metadata:
+      labels:
+        app: poll-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: poll-app-frontend:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "32Mi"
+              cpu: "25m"
+            limits:
+              memory: "64Mi"
+              cpu: "100m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: poll-frontend
+spec:
+  type: LoadBalancer
+  selector:
+    app: poll-frontend
+  ports:
+    - port: 3000
+      targetPort: 80

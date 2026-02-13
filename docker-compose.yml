@@ -1,0 +1,21 @@
+services:
+  backend:
+    build: ./backend
+    container_name: poll-backend
+    networks:
+      - poll-net
+    # No ports exposed to host - only frontend talks to backend
+
+  frontend:
+    build: ./frontend
+    container_name: poll-frontend
+    ports:
+      - "3001:80"
+    depends_on:
+      - backend
+    networks:
+      - poll-net
+
+networks:
+  poll-net:
+    driver: bridge
